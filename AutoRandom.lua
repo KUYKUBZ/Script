@@ -66,7 +66,7 @@ local function CheckSpawnChance()
   
   local car = GetMyCar()
   if car and car:GetAttribute("SpawnChance") then 
-    local targetChance = _G.SpawnChance or 1 
+    local targetChance = _G.SpawnChance or 10
     local currentCarChance = car:GetAttribute("SpawnChance")
 
     if currentCarChance > targetChance then
