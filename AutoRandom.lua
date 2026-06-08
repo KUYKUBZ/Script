@@ -1,9 +1,21 @@
 local Plrs = game:GetService("Players")
 local Plr = Plrs.localPlayer
 
+local VirtualUser = game:GetService("VirtualUser")
+
 local Rep = game:GetService("ReplicatedStorage")
 local Events = Rep:FindFirstChild("Events")
 local Vehicles = Events:FindFirstChild("Vehicles")
+
+spawn(function()
+  Plr.Idled:Connect(function()
+    pcall(function()
+      VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+      task.wait(0.5)
+      VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    end)
+  end)
+end)
 
 local function CheckOwner(part)
   if not part then return end
