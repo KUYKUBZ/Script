@@ -66,13 +66,18 @@ local function CheckSpawnChance()
   
   local car = GetMyCar()
   if car and car:GetAttribute("SpawnChance") then 
-    if car:GetAttribute("SpawnChance") > _G.SpawnChance or 1 then
+    local targetChance = _G.SpawnChance or 1 
+    local currentCarChance = car:GetAttribute("SpawnChance")
+
+    if currentCarChance > targetChance then
       SellCar()
-    else
-      print("You got : " .. car:GetAttribute("Model"))
+    elseif currentCarChance <= targetChance then
+      print("You got : " .. tostring(car:GetAttribute("Model")))
+      return
     end
   end
 end
+
 
 local function RandomAuctionAndFire()
   local utils = workspace:FindFirstChild("Utils")
