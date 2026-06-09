@@ -4,6 +4,28 @@ local Plr = Players.LocalPlayer
 
 local VirtualUser = game:GetService("VirtualUser")
 
+local functions = getgc(true)
+local bypassedCount = 0
+
+for _, value in pairs(functions) do
+    if type(value) == "function" then
+        local info = debug.getinfo(value)
+        if info and info.name then
+            local funcName = string.lower(info.name)
+            if string.find(funcName, "protocol") or string.find(funcName, "band") or string.find(funcName, "ban") then
+                pcall(function()
+                    hookfunction(value, function(...) 
+                        return nil 
+                    end)
+                    bypassedCount = bypassedCount + 1
+                end)
+            end
+        end
+    end
+end
+
+print(tostring(bypassedCount))
+
 spawn(function()
   Plr.Idled:Connect(function()
     pcall(function()
