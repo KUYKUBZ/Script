@@ -1,5 +1,6 @@
 local functions = getgc(true)
 local bypassedCount = 0
+
 for _, value in pairs(functions) do
     if type(value) == "function" then
         local info = debug.getinfo(value)
