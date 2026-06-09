@@ -2,6 +2,18 @@ local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local Plr = Players.LocalPlayer
 
+local VirtualUser = game:GetService("VirtualUser")
+
+spawn(function()
+  Plr.Idled:Connect(function()
+    pcall(function()
+      VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+      task.wait(0.5)
+      VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    end)
+  end)
+end)
+
 local info = TweenInfo.new(
     35,
     Enum.EasingStyle.Linear,
