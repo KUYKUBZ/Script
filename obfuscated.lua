@@ -588,7 +588,7 @@ local function auto()
       if #g > 0 then
         SellCar(#g)
       else
-        local success = BuyCar(money)
+        local success = BuyCar(0)
         if success then
           task.wait(5)
           Repair()
