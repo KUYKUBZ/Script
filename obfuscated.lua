@@ -588,16 +588,14 @@ local function auto()
       if #g > 0 then
         SellCar(#g)
       else
-        local success = BuyCar(0)
+        local success = BuyCar(money)
         if success then
           task.wait(5)
           Repair()
         else
-          Plr.Character:PivotTo(CFrame.new(-1311, 8, -830))
-          task.wait(2)
-          firesignal(Plr.PlayerGui.HUD.Frames.Confirmation.Confirm.Activated)
-          task.wait(65)
-          Plr.Character:PivotTo(CFrame.new(-1311, 8, -888))
+          BuyCar(1)
+          task.wait(5)
+          Repair()
         end
       end
       return
