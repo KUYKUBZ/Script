@@ -16,7 +16,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/KUYKUBZ/Script/refs/h
 
 ]]
 
-setfpscap(15)
+setfpscap(10)
 
 local LMG2L = {}; 
 
