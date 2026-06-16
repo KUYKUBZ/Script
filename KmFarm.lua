@@ -1,5 +1,5 @@
-local TweenService = game:GetService("TweenService")
-local Players = game:GetService("Players")
+setfpscap(10)
+local TweenService = game:GetService("TweenService")local Players = game:GetService("Players")
 local Plr = Players.LocalPlayer
 
 local VirtualUser = game:GetService("VirtualUser")
