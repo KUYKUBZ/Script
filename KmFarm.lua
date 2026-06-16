@@ -36,15 +36,6 @@ spawn(function()
   end)
 end)
 
-local info = TweenInfo.new(
-    35,
-    Enum.EasingStyle.Linear,
-    Enum.EasingDirection.Out,
-    0,
-    false,
-    0
-)
-
 local function CheckOwner(objects)
     local result = false
     pcall(function()
@@ -75,8 +66,18 @@ while true do
     local myCar = GetMyCar()
 
     if myCar then
-        local startCFrame = CFrame.new(-1994, 1, 4995)
-        local targetCFrame = CFrame.new(-3081, 1, -1869)
+        local startCFrame = CFrame.new(-4600, 2, 1322)
+        local targetCFrame = CFrame.new(-2272, 2, 4654)
+        local dis = (startCFrame.Position - targetCFrame.Position).Magnitude
+        
+        local info = TweenInfo.new(
+          dis/40,
+          Enum.EasingStyle.Linear,
+          Enum.EasingDirection.Out,
+          0,
+          false,
+          0
+        )
         
         myCar:PivotTo(startCFrame)
         task.wait(0.1)
