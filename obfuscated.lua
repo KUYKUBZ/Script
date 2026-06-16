@@ -458,11 +458,11 @@ local function Repair()
     if car and Plr.Character then
       Plr.Character:PivotTo(locations.Afkpos)
       LoadCar(car, locations.Parking)
-      task.wait(1)
+      task.wait(2)
       UnEquipAllPart()
-      task.wait(1)
+      task.wait(2)
       UnEquipAllPart()
-      task.wait(1)
+      task.wait(2)
     else
       if Plr.Character then
         Plr.Character:PivotTo(CFrame.new(-1932, 5, -792))
@@ -503,9 +503,9 @@ local function Repair()
       end)
     end
     PrintColor()
-    task.wait(18)
+    task.wait(20)
     EquipAllPart()
-    task.wait(2)
+    task.wait(3)
     destroypart()
   end)
 end
@@ -513,17 +513,17 @@ end
 local function SellCar(num)
   pcall(function()
     for i = 1, num do 
-      task.wait(2)
+      task.wait(3)
       if Plr.Character then
         Plr.Character:PivotTo(CFrame.new(-1932, 5, -792))
         local carToSell = RandomCarSell()
         if carToSell then
           LoadCar(carToSell, CFrame.new(-1914, 5, -788))
-          task.wait(1)
+          task.wait(2)
           local prompt = workspace.Utils.SellCar.Prompt:FindFirstChildOfClass("ProximityPrompt")
           if prompt then
             fireproximityprompt(prompt)
-            task.wait(.8)
+            task.wait(1)
             if Plr.PlayerGui.HUD.Frames.Confirmation:FindFirstChild("Confirm") then
                 firesignal(Plr.PlayerGui.HUD.Frames.Confirmation.Confirm.Activated)
             end
@@ -563,7 +563,7 @@ local function buygarage()
       task.wait(2)
       if prox then
           fireproximityprompt(prox)
-          task.wait(.8)
+          task.wait(1)
           if Plr.PlayerGui.HUD.Frames.Confirmation:FindFirstChild("Confirm") then
               firesignal(Plr.PlayerGui.HUD.Frames.Confirmation.Confirm.Activated)
           end
@@ -625,7 +625,7 @@ end
 
 task.spawn(function()
     while true do
-        task.wait(1)
+        task.wait(4)
         if getgenv().abc and getgenv().abc.AutoFarm then
             if not _G.IsBusy then
                 _G.IsBusy = true
