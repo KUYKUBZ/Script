@@ -433,8 +433,8 @@ end
 local function Repair()
   pcall(function()
     local locations = {
-      ["Parking"] = CFrame.new(-1294, 66, -1467),
-      ["Afkpos"] = CFrame.new(-1264, 66, -1486),
+      ["Parking"] = CFrame.new(-1152, 5, -1546),
+      ["Afkpos"] = CFrame.new(-1169, 5, -1543),
       ["BatteryCharger"] = CFrame.new(-1167, 5, -1574),
       ["GrindingMachine"] = {
         CFrame.new(-1168, 5, -1567),
