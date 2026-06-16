@@ -305,7 +305,7 @@ local function BuyCar(maxBudget)
         task.wait(2)
         if car:FindFirstChild("ClickDetector") then
           fireclickdetector(car["ClickDetector"])
-          task.wait(2)
+          task.wait(1)
           if Plr.PlayerGui.HUD.Frames.Confirmation:FindFirstChild("Confirm") then
             firesignal(Plr.PlayerGui.HUD.Frames.Confirmation.Confirm.Activated)
             status = true
