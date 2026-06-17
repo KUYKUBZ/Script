@@ -1,0 +1,76 @@
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+local Plrs = game:GetService("Players")
+local Plr = Plrs.LocalPlayer
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+
+local function getCharacter()
+    return Plr.Character or Plr.CharacterAdded:Wait()
+end
+
+local function ServerHop()
+    local sfUrl = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
+    local success, result = pcall(function()
+        return HttpService:JSONDecode(game:HttpGet(sfUrl))
+    end)
+    
+    if success and result and result.data then
+        for _, server in pairs(result.data) do
+            if server.id ~= game.JobId and server.playing < server.maxPlayers then
+                TeleportService:TeleportToPlaceInstance(game.PlaceId, server.id, Plr)
+                task.wait(5)
+                return
+            end
+        end
+    end
+    TeleportService:Teleport(game.PlaceId, Plr)
+end
+
+local function buycar()
+    local vehicles = workspace.Vehicles:GetChildren()
+    local foundTargetCar = false
+
+    for _, Junkyardcar in pairs(vehicles) do
+        if Junkyardcar:GetAttribute("Junkyard") == true then
+            local Chance = Junkyardcar:GetAttribute("SpawnChance")
+            
+            if tonumber(Chance) and tonumber(Chance) <= 5 and tonumber(Chance) >= 2 and
+            not Junkyardcar:GetAttribute("ExclusivePrice") then
+                foundTargetCar = true
+                
+                local char = getCharacter()
+                local humanoid = char:FindFirstChildOfClass("Humanoid")
+                
+                if humanoid then humanoid.Sit = false end
+                task.wait(0.5)
+                
+                char:PivotTo(Junkyardcar:GetPivot() * CFrame.new(7, 0, 0))
+                task.wait(0.5)
+                
+                if Junkyardcar:FindFirstChild("ClickDetector") then
+                    fireclickdetector(Junkyardcar["ClickDetector"])
+                    task.wait(0.5)
+                end
+                
+                local confirmBtn = Plr.PlayerGui.HUD.Frames.Confirmation.Confirm
+                if confirmBtn then
+                    firesignal(confirmBtn.Activated)
+                    task.wait(1)
+                end
+            end
+        end
+    end
+
+    if not foundTargetCar then
+        ServerHop()
+    end
+end
+
+_G.w = true
+while _G.w do 
+    buycar()
+    task.wait(2)
+end
