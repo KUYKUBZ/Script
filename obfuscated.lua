@@ -13,8 +13,12 @@ getgenv().abc = {
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KUYKUBZ/Script/refs/heads/main/obfuscated.lua"))()
 ]]
 
-
+print(12345)
 setfpscap(10)
+
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
 
 local LMG2L = {}; 
 
