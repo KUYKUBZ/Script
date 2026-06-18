@@ -96,6 +96,18 @@ LMG2L["Sold_a"]["Text"] = [[Sold : waiting...]];
 LMG2L["Sold_a"]["Name"] = [[Sold]];
 LMG2L["Sold_a"]["LayoutOrder"] = 3;
 
+LMG2L["Age"] = Instance.new("TextLabel", LMG2L["ScrollingFrame_6"]);
+LMG2L["Age"]["TextWrapped"] = true;
+LMG2L["Age"]["BorderSizePixel"] = 0;
+LMG2L["Age"]["TextScaled"] = true;
+LMG2L["Age"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+LMG2L["Age"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+LMG2L["Age"]["BackgroundTransparency"] = 1;
+LMG2L["Age"]["Size"] = UDim2.new(1, 0, 0, 45);
+LMG2L["Age"]["Text"] = [[Age : waiting...]];
+LMG2L["Age"]["Name"] = [[AccountAge]];
+LMG2L["Age"]["LayoutOrder"] = 4;
+
 local function formatNumber(value)
     local num = tonumber(value) or 0
     local formatted = tostring(math.floor(num))
@@ -118,6 +130,13 @@ local function SoldLable(text)
         LMG2L["Sold_a"]["Text"] = "Sold : " .. formatNumber(text);
     end
 end
+
+local function AgeLable(num)
+    if LMG2L["Age"] then
+        LMG2L["Age"]["Text"] = "Age : " .. formatNumber(num) .. " Days";
+    end
+end
+
 
 _G.IsBusy = false
 
@@ -155,12 +174,14 @@ end)
 task.spawn(function()
     local lastMoney = -1
     local lastSold = -1
+    local lastdays = -1
     while true do 
         task.wait(0.5) 
         pcall(function()
             if Plr:FindFirstChild("PlayerData") then
                 local Money = Plr.PlayerData.Status.Money.Value
                 local sold = Plr.PlayerData.Status.CarsSold.Value
+                local days = Plr.AccountAge
                 
                 if Money ~= lastMoney then
                     lastMoney = Money
@@ -170,6 +191,10 @@ task.spawn(function()
                 if sold ~= lastSold then
                     lastSold = sold
                     SoldLable(sold)
+                end
+                
+                if days ~= lastdays then
+                  AgeLable(days)
                 end
             end
         end)
