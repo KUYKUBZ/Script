@@ -2,7 +2,8 @@
 
 
 --[[
-getgenv().abc = {  ["AutoFarm"] = true,
+getgenv().abc = {
+  ["AutoFarm"] = true,
   ["Price"] = 17000,
   ["AutoBuyGarage"] = true,
   ["Codes"] = {
