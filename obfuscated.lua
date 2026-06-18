@@ -1,19 +1,22 @@
+
+
+
 --[[
-getgenv().abc = {
-  ["AutoFarm"] = true,
+getgenv().abc = {  ["AutoFarm"] = true,
   ["Price"] = 17000,
   ["AutoBuyGarage"] = true,
   ["Codes"] = {
     "100M",
     "SAUSAGE",
     "WATERLAVA",
-    "RENASCAPTURADO"
+    "RENASCAPTURADO",
+    "UPDATEPLS"
   }
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KUYKUBZ/Script/refs/heads/main/obfuscated.lua"))()
 ]]
 
-print(12345)
+
 setfpscap(10)
 
 if not game:IsLoaded() then
@@ -119,6 +122,9 @@ _G.IsBusy = false
 
 local Plrs = game:GetService("Players")
 local Plr = Plrs.LocalPlayer
+
+local TweenService = game:GetService("TweenService")
+
 local VIM = game:GetService("VirtualInputManager")
 local VirtualUser = game:GetService("VirtualUser")
 local Rep = game:GetService("ReplicatedStorage")
@@ -201,13 +207,6 @@ Plr.Idled:Connect(function()
     end)
 end)
 
-local function holdkey(Key, sec)
-    pcall(function()
-        VIM:SendKeyEvent(true, Key, false, game)
-        task.wait(sec)
-        VIM:SendKeyEvent(false, Key, false, game)
-    end)
-end
 
 local function DisibleSit()
     pcall(function()
@@ -534,7 +533,42 @@ local function Repair()
     end)
 end
 
+local function CarTween(pos)
+    Plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+    task.wait(1)
+    
+    local Car = GetMyCar()
+    if not Car then return end
+    
+    Car.DriveSeat:Sit(Plr.Character.Humanoid)
+    
+    local Info = TweenInfo.new(120, Enum.EasingStyle.Linear)
+  
+    local cfvalue = Instance.new("CFrameValue")
+    cfvalue.Value = Car:GetPivot()
+  
+    local connection
+    connection = cfvalue.Changed:Connect(function(newCFrame)
+        if Car and Car.Parent then
+            Car:PivotTo(newCFrame)
+        else
+            connection:Disconnect()
+        end
+    end)
+  
+    local Tween = TweenService:Create(cfvalue, Info, {Value = pos})
+    Tween:Play()
+    Tween.Completed:Wait()
+    connection:Disconnect()
+    cfvalue:Destroy()
+end
+
 local function SellCar(num)
+  LoadCar(RandomCarSell(), CFrame.new(-2768, 3, 4690))
+  task.wait(1)
+  CarTween(CFrame.new(-9892, 3, 2450))
+  task.wait(1)
+  Plr.Character.Humanoid.Sit = false
     pcall(function()
         for i = 1, num do 
             task.wait(2)
@@ -655,7 +689,6 @@ task.spawn(function()
             if not _G.IsBusy then
                 _G.IsBusy = true
                 
-                -- ใช้สถานะเลื่อนเวลา (defer) เพื่อรับประกันว่าตัวแปรจะไม่ค้างหากโค้ดด้านในพัง
                 task.defer(function()
                     pcall(function()
                         DisibleSit()
