@@ -13,6 +13,7 @@ getgenv().abc = {
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KUYKUBZ/Script/refs/heads/main/newfix.lua"))()
 ]]
+
 setfpscap(10)
 
 if not game:IsLoaded() then
@@ -583,4 +584,202 @@ local function Repair()
                             part:PivotTo(target)
                             task.wait(.5)
                             ClickRepair()
-            
+                            _G.grindIndex = _G.grindIndex + 1
+                            if _G.grindIndex > #locations.GrindingMachine then _G.grindIndex = 1 end
+                        elseif Machine == "PartsWasher" then
+                            local target = locations.Washer[_G.washerIndex]
+                            part:PivotTo(target)
+                            task.wait(.5)
+                            ClickRepair()
+                            _G.washerIndex = _G.washerIndex + 1
+                            if _G.washerIndex > #locations.Washer then _G.washerIndex = 1 end
+                        elseif not Machine then
+                            BuyPart(part:GetAttribute("PartName"), part:GetAttribute("Category"))
+                        end
+                    end
+                end)
+            end
+        end
+        task.wait(15)
+        LoadCar(car, Plr.Character:GetPivot())
+        task.wait(.5)
+        PrintColor()
+        task.wait(.5)
+        EquipAllPart()
+        task.wait(2)
+        destroypart()
+    end)
+end
+
+local function CarTween(pos)
+    _G.Part = false
+    Plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+    task.wait(1)
+    
+    local Car = GetMyCar()
+    if not Car then return end
+    
+    Car.DriveSeat:Sit(Plr.Character.Humanoid)
+    
+    local Info = TweenInfo.new(120, Enum.EasingStyle.Linear)
+  
+    local cfvalue = Instance.new("CFrameValue")
+    cfvalue.Value = Car:GetPivot()
+  
+    local connection
+    connection = cfvalue.Changed:Connect(function(newCFrame)
+        if Car and Car.Parent then
+            Car:PivotTo(newCFrame)
+        else
+            connection:Disconnect()
+        end
+    end)
+  
+    local Tween = TweenService:Create(cfvalue, Info, {Value = pos})
+    Tween:Play()
+    Tween.Completed:Wait()
+    connection:Disconnect()
+    cfvalue:Destroy()
+    task.wait(1)
+    _G.Part = true
+end
+
+local function SellCar(num)
+  LoadCar(RandomCarSell(), CFrame.new(-2768, 3, 4690))
+  task.wait(1)
+  CarTween(CFrame.new(-9892, 3, 2450))
+  task.wait(1)
+  Plr.Character.Humanoid.Sit = false
+    pcall(function()
+        for i = 1, num do 
+            task.wait(2)
+            if Plr.Character then
+                tween(CFrame.new(-1932, 13, -792))
+                local carToSell = RandomCarSell()
+                if carToSell then
+                    LoadCar(carToSell, CFrame.new(-1914, 5, -788))
+                    task.wait(2)
+                    local utils = workspace:FindFirstChild("Utils") and workspace.Utils:FindFirstChild("SellCar")
+                    local prompt = utils and utils:FindFirstChild("Prompt") and utils.Prompt:FindFirstChildOfClass("ProximityPrompt")
+                    if prompt then
+                        fireproximityprompt(prompt)
+                        task.wait(1)
+                        if Plr.PlayerGui:FindFirstChild("HUD") and Plr.PlayerGui.HUD.Frames.Confirmation:FindFirstChild("Confirm") then
+                            firesignal(Plr.PlayerGui.HUD.Frames.Confirmation.Confirm.Activated)
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end
+
+local function GetGarage()
+    local slots = 3
+    pcall(function()
+        if Plr:FindFirstChild("PlayerData") and Plr.PlayerData:FindFirstChild("GarageModel") then
+            local mygarage = Plr.PlayerData.GarageModel.Value
+            if mygarage == "Default" then slots = 3
+            elseif mygarage == "4Slots" then slots = 4
+            elseif mygarage == "6Slots" then slots = 6
+            elseif mygarage == "8Slots" then slots = 8
+            elseif mygarage == "10Slots" then slots = 10
+            elseif mygarage == "24Slots" then slots = 24
+            end
+        end
+    end)
+    return slots
+end
+
+local function buygarage()
+    pcall(function()
+        if Plr.Character and workspace:FindFirstChild("Garages") then
+            tween(CFrame.new(-1550, 5, 16))
+            local targetGarage = workspace.Garages:FindFirstChild("8Slots")
+            local prox = targetGarage and targetGarage.Sign.Label:FindFirstChild("SignPrompt")
+            task.wait(1.5)
+            if prox then
+                fireproximityprompt(prox)
+                task.wait(1)
+                if Plr.PlayerGui:FindFirstChild("HUD") and Plr.PlayerGui.HUD.Frames.Confirmation:FindFirstChild("Confirm") then
+                    firesignal(Plr.PlayerGui.HUD.Frames.Confirmation.Confirm.Activated)
+                end
+            end
+        end
+    end)
+end
+
+local function auto()
+    pcall(function()
+        if not Plr:FindFirstChild("PlayerData") then return end
+        local garage = GetGarage()
+        local g = Plr.PlayerData.Garage:GetChildren()
+        local money = tonumber(Plr.PlayerData.Status.Money.Value) or 0
+        local targetPrice = tonumber(getgenv().abc.Price) or 17000
+
+        if getgenv().abc.AutoBuyGarage and money > 400000 and garage < 8 then
+            buygarage()
+            return
+        end
+
+        if money < targetPrice then
+            if #g > 0 then
+                SellCar(#g)
+            else
+                local success = BuyCar(money)
+                if success then
+                    task.wait(3)
+                    Repair()
+                else
+                    tween(CFrame.new(-1311, 8, -830))
+                    task.wait(1.5)
+                    if Plr.PlayerGui:FindFirstChild("HUD") and Plr.PlayerGui.HUD.Frames.Confirmation:FindFirstChild("Confirm") then
+                        firesignal(Plr.PlayerGui.HUD.Frames.Confirmation.Confirm.Activated)
+                    end
+                    task.wait(61)
+                    tween(CFrame.new(-1311, 8, -888))
+                    BuyCar(1)
+                    task.wait(3)
+                    Repair()
+                end
+            end
+            return
+        end
+
+        if money >= targetPrice then
+            if #g >= garage then
+                SellCar(#g)
+            else
+                local success = BuyCar(money)
+                if success then
+                    task.wait(3)
+                    Repair()
+                else
+                    task.wait(1)
+                end
+            end
+            return
+        end
+    end)
+end
+
+task.spawn(function()
+    while true do
+        task.wait(3)
+        if getgenv().abc and getgenv().abc.AutoFarm then
+            if not _G.IsBusy then
+                _G.IsBusy = true
+                
+                task.defer(function()
+                    pcall(function()
+                        DisibleSit()
+                        auto()
+                    end)
+                    _G.IsBusy = false
+                end)
+            end
+        end
+    end
+end)
+
+return LMG2L, require;
