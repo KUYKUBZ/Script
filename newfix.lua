@@ -198,6 +198,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
+    for i = 1,10 do
     if getgenv().abc and getgenv().abc.Codes and Events then
         local hud = Events:WaitForChild("HUD", 5)
         if hud then
@@ -212,6 +213,7 @@ task.spawn(function()
             end
         end
     end
+  end
 end)
 
 pcall(function()
