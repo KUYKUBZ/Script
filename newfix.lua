@@ -11,7 +11,7 @@ getgenv().abc = {
     "UPDATEPLS"
   }
 }
-loadstring(game:HttpGet("https://raw.githubusercontent.com/KUYKUBZ/Script/refs/heads/main/obfuscated.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/KUYKUBZ/Script/refs/heads/main/newfix.lua"))()
 ]]
 setfpscap(10)
 
