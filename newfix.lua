@@ -241,7 +241,7 @@ local function tween(pos)
   if not char or not hrp then return end
   
   local dis = (pos.Position - hrp.CFrame.Position).Magnitude
-  local Info = TweenInfo.new(dis/250, Enum.EasingStyle.Linear)
+  local Info = TweenInfo.new(dis/300, Enum.EasingStyle.Linear)
   
   local Tween = TweenService:Create(hrp, Info, {CFrame = pos * CFrame.new(0, -10, 0)})
   
@@ -767,7 +767,7 @@ end
 
 task.spawn(function()
     while true do
-        task.wait(3)
+        task.wait(10)
         if getgenv().abc and getgenv().abc.AutoFarm then
             if not _G.IsBusy then
                 _G.IsBusy = true
