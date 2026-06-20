@@ -163,7 +163,7 @@ window:Toggle("Auto Random", false, function(bool)
           RandomAuctionAndFire()
           task.wait(1.5)
           CheckSpawnChance()
-          task.wait(3)
+          task.wait(5)
         end
       end)
     end
