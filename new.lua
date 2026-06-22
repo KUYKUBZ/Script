@@ -14,19 +14,9 @@ getgenv().abc = {
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KUYKUBZ/Script/refs/heads/main/new.lua"))()
 ]]
 
-getgenv().abc = {
-  ["AutoFarm"] = true,
-  ["Price"] = 17000,
-  ["AutoBuyGarage"] = true,
-  ["Codes"] = {
-    "100M",
-    "SAUSAGE",
-    "WATERLAVA",
-    "RENASCAPTURADO"
-  }
-}
 
-setfpscap(10)
+
+setfpscap(15)
 
 if not game:IsLoaded() then
     game.Loaded:Wait()
