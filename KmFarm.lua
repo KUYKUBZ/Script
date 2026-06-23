@@ -1,4 +1,4 @@
-setfpscap(10)
+setfpscap(15)
 local TweenService = game:GetService("TweenService")local Players = game:GetService("Players")
 local Plr = Players.LocalPlayer
 
@@ -71,7 +71,7 @@ while true do
         local dis = (startCFrame.Position - targetCFrame.Position).Magnitude
         
         local info = TweenInfo.new(
-          dis/35,
+          dis/40,
           Enum.EasingStyle.Linear,
           Enum.EasingDirection.Out,
           0,
