@@ -71,7 +71,7 @@ while true do
         local dis = (startCFrame.Position - targetCFrame.Position).Magnitude
         
         local info = TweenInfo.new(
-          dis/40,
+          dis/35,
           Enum.EasingStyle.Linear,
           Enum.EasingDirection.Out,
           0,
