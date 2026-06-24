@@ -627,7 +627,7 @@ local function CarTween(pos)
     
     Car.DriveSeat:Sit(Plr.Character.Humanoid)
     
-    local Info = TweenInfo.new(120, Enum.EasingStyle.Linear)
+    local Info = TweenInfo.new(150, Enum.EasingStyle.Linear)
   
     local cfvalue = Instance.new("CFrameValue")
     cfvalue.Value = Car:GetPivot()
