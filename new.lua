@@ -651,7 +651,7 @@ local function CarTween(pos)
 end
 
 local function SellCar(num)
-  for i=1,5 do
+  for i=1,num do
   LoadCar(RandomCarSell(), CFrame.new(-2768, 3, 4690))
   task.wait(1)
   CarTween(CFrame.new(-9892, 3, 2450))
