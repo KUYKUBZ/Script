@@ -627,7 +627,7 @@ local function CarTween(pos)
     
     Car.DriveSeat:Sit(Plr.Character.Humanoid)
     
-    local Info = TweenInfo.new(150, Enum.EasingStyle.Linear)
+    local Info = TweenInfo.new(120, Enum.EasingStyle.Linear)
   
     local cfvalue = Instance.new("CFrameValue")
     cfvalue.Value = Car:GetPivot()
@@ -651,11 +651,14 @@ local function CarTween(pos)
 end
 
 local function SellCar(num)
+  for i=1,5 do
   LoadCar(RandomCarSell(), CFrame.new(-2768, 3, 4690))
   task.wait(1)
   CarTween(CFrame.new(-9892, 3, 2450))
   task.wait(1)
   Plr.Character.Humanoid.Sit = false
+  task.wait(1)
+  end
     pcall(function()
         for i = 1, num do 
             task.wait(2)
